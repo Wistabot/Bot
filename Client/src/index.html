@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>WistaBot</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="assets/css/material-design-iconic-font.min.css" />
+  <script src="assets/js/jquery.min.js"></script>
+<link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+<script src="assets/js/bootstrap.bundle.js"></script>
+<link rel='stylesheet' href='assets/css/material-icons.css'>
+
+</head>
+<body>
+
+   
+    <script src="assets/js/compromise.min.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script>
+    
+    var restUrl='https://wistabotserver.herokuapp.com/'
+    
+    //search wiki function
+    function searchWiki(query){
+    var msg=query.replace(/[^0-9a-z-A-Z ]/g, "").replace(/ +/, " ")
+    console.log(msg)
+    if(msg=="" || msg==null){
+      sendUnansweredQueryData(query);
+    return "I'm not able to google for you with the provided data &#9785;";
+    }
+      var responseServer;
+    var queryTerm=msg.charAt(0).toUpperCase() + msg.slice(1);
+      var data = $.parseJSON($.ajax({
+            url:  "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&origin=*&titles="+queryTerm,
+            dataType: "json", 
+            async: false
+        }).responseText);
+      
+      var wikiUrl="https://en.wikipedia.org/wiki/"+queryTerm;
+         
+    var pageid = Object.keys(data.query.pages)[0];
+    //console.log(data.query.pages[pageid].extract);
+              responseServer= data.query.pages[pageid].extract;
+            // console.log(responseServer)
+             
+             if (typeof(responseServer) == 'undefined') {
+        //Text Response
+      return "I'm not able to google for you with the provided data &#9785;";
+      }
+             else{
+            return responseServer+"\n"+"<a href=\""+wikiUrl+"\"  target=\"_blank\">Find out more</a>";
+             }
+          }  //////////////////////////////////////////////function done
+    
+    //Start point for robo.
+    function roboResponse(query){
+      
+      //Access point url
+      
+      
+    // This will ajax word response.
+      var wdata = $.parseJSON($.ajax({
+            url:  restUrl+'words/getAll',
+            dataType: "json", 
+            async: false
+        }).responseText);
+      
+      
+      // This will ajax pattern response.
+      var pdata = $.parseJSON($.ajax({
+            url:  restUrl+'patterns/getAll',
+            dataType: "json", 
+            async: false
+        }).responseText); 
+    
+        // call botchat method.
+       return botChat(query,wdata,pdata);
+    }
+  
+    function botChat(query,wordsDB,patternsDB){
+      sendQueryData(query);
+    const plugin = {
+      
+      //Entity modelling json to to identify the term as entity.
+      
+      // words:wordsDB,
+
+     words:{
+      'WistaBot': 'Software',
+     
+    },
+      
+      //Patterns json to identify the sentense
+      
+      // patterns:patternsDB
+  
+       patterns:{
+	  //Get specific details based on query
+      "how do? i (can|should)? (log|sign|get) in to my? #Software" : 'LoginIssue',
+      "i can't (log|sign|get) in to my? #Software" : 'LoginIssue',
+      "#Software won't let me (log|sign|get) in" : 'LoginIssue',
+	  "details about #MyName" : 'UserDetails',
+	  
+	  //Search for a specific term(noun)
+	  "(wiki|search)? word? ":'SearchWiki',
+	  "(who|what)? is the? word? ":'SearchWiki',
+	  
+	  //Wish user
+	  "(hi|hello)? Robo?" : 'GreetSomeone',
+	  "good? (morning|afternoon|evening) Robo?" : 'GreetSomeone',
+	  
+	  //React on getting thanks
+	  "(thanks|thank|thanking) for? the? (help|helping)? you? Robo?" : 'GreetSomeoneThanksReply',
+
+    //Notes for specific semesters
+    "(show|Show|get|Get) me? the? notes? of? second semester" :'SecondSemNotes',
+    "(show|Show|get|Get) me? the? notes? of?  semester two" :'SecondSemNotes',
+    "(show|Show|get|Get) me? the? notes? of?  semester 2" :'SecondSemNotes',
+    "(show|Show|get|Get) me? the? notes? of? Third semester":'ThirdSemNotes',
+    "(show|Show|get|Get) me? the? notes? of? semester three":'ThirdSemNotes',
+    "(show|Show|get|Get) me? the? notes? of? semester 3":'ThirdSemNotes',
+    "(show|Show|get|Get) me? the? notes? of? fourth semester":'FourthSemNotes',
+    "(show|Show|get|Get) me? the? notes? of? semester four":'FourthSemNotes',
+    "(show|Show|get|Get) me? the? notes? of? semester 4":'FourthSemNotes',
+    "(show|Show|get|Get) me? the? notes? of? fifth semester":'FifthSemNotes',
+    "(show|Show|get|Get) me? the? notes? of? semester five":'FifthSemNotes',
+    "(show|Show|get|Get) me? the? notes? of? semester 5":'FifthSemNotes',
+    "(show|Show|get|Get) me? the? notes? of? sixth semester":'SixthSemNotes',
+    "(show|Show|get|Get) me? the? notes? of? semester six":'SixthSemNotes',
+    "(show|Show|get|Get) me? the? notes? of? semester 6":'SixthSemNotes',
+    "(show|Show|get|Get) me? the? notes? of? seventh semester":'SeventhSemNotes',
+    "(show|Show|get|Get) me? the? notes? of? semester seven":'SeventhSemNotes',
+    "(show|Show|get|Get) me? the? notes? of? semester 7":'SeventhSemNotes',
+
+    //Get syllabus of semesters
+    "(show|Show|get|Get) me? the? syllabus? of? second semester" :'SecondSemSyllabus',
+    "(show|Show|get|Get) me? the? syllabus? of?  semester two" :'SecondSemSyllabus',
+    "(show|Show|get|Get) me? the? syllabus? of?  semester 2" :'SecondSemSyllabus',
+    "(show|Show|get|Get) me? the? syllabus? of? Third semester":'ThirdSemSyllabus',
+    "(show|Show|get|Get) me? the? syllabus? of? semester three":'ThirdSemSyllabus',
+    "(show|Show|get|Get) me? the? syllabus? of? semester 3":'ThirdSemSyllabus',
+    "(show|Show|get|Get) me? the? syllabus? of? fourth semester":'FourthSemSyllabus',
+    "(show|Show|get|Get) me? the? syllabus? of? semester four":'FourthSemSyllabus',
+    "(show|Show|get|Get) me? the? syllabus? of? semester 4":'FourthSemSyllabus',
+    "(show|Show|get|Get) me? the? syllabus? of? fifth semester":'FifthSemSyllabus',
+    "(show|Show|get|Get) me? the? syllabus? of? semester five":'FifthSemSyllabus',
+    "(show|Show|get|Get) me? the? syllabus? of? semester 5":'FifthSemSyllabus',
+    "(show|Show|get|Get) me? the? syllabus? of? sixth semester":'SixthSemSyllabus',
+    "(show|Show|get|Get) me? the? syllabus? of? semester six":'SixthSemSyllabus',
+    "(show|Show|get|Get) me? the? syllabus? of? semester 6":'SixthSemSyllabus',
+    "(show|Show|get|Get) me? the? syllabus? of? seventh semester":'SeventhSemSyllabus',
+    "(show|Show|get|Get) me? the? syllabus? of? semester seven":'SeventhSemSyllabus',
+    "(show|Show|get|Get) me? the? syllabus? of? semester 7":'SeventhSemSyllabus',
+
+      //Regarding the marks and grades
+    "(where|how) to? can? i? check? my? semester? marks? academic? details?":'MarkDetails',
+
+        //Get me academic details
+    "(show|Show|get|Get) me? the? academic details? of? wista?":'WistaAcademics',
+
+    //Get me academic policies
+    "(show|Show|get|Get) me? the? wista? (policy|policies) details? of? wista?":'WistaPolicies',
+
+    //About wista
+    "(get|Get|tell) me? about? the? wista? details? of? wista?":'WistaAbout',
+    "(get|Get|tell) me? about? the? wista? program? details? of? wista?":'WistaAbout',
+    "what is? wista program? about?":'WistaAbout',
+
+    //College details or university
+    "(how|where|show)? me? to? contact? (college|university) contact? staff? details?":'CollegeDetails',
+	
+        //My details
+        "show my details":'MeAbout',
+        "who am i":'MeAbout',
+  }
+      }
+      nlp.plugin(plugin)
+    
+      //Query to be framed as nlp sentence.
+      let doc=nlp(query)
+    
+      //Check for the condition
+      if(doc.has('#LoginIssue')){
+      return 'Please contact admin.'
+      }
+
+      if(doc.has('#MeAbout')){
+      return '<a href="/home/userDetails" target="_blank">This is you</a>'
+      }
+
+ if(doc.has('#CollegeDetails')){
+        return '<a href="https://vit.ac.in/contactus" target="_blank">Contact US</a>'
+      }
+
+       if(doc.has('#WistaAcademics')){
+        return '<a href="/home/academicsPolicy" target="_blank">Academic details</a>'
+      }
+
+      if(doc.has('#WistaPolicies')){
+        return '<a href="/home/wistaPolicy" target="_blank">Wista policies</a>'
+      }
+
+if(doc.has('#WistaAbout')){
+        return '<a href="/home/about" target="_blank">About Wista</a>'
+      }
+
+if(doc.has('#MarkDetails')){
+  return 'Visit <a href="/home/semOne" target="_blank">Here</a>.'
+}
+      if(doc.has('#SecondSemNotes')){
+        return '<a href="/home/semOne" target="_blank">Second semester notes</a>'
+      }
+
+      if(doc.has('#ThirdSemNotes')){
+        return '<a href="/home/semTwo" target="_blank">Third semester notes</a>'
+      }
+
+      if(doc.has('#FourthSemNotes')){
+        return '<a href="/home/semThree" target="_blank">Fourth semester notes</a>'
+      }
+
+      if(doc.has('#FifthSemNotes')){
+        return '<a href="/home/semFour" target="_blank">Fifth semester notes</a>'
+      }
+
+      if(doc.has('#SixthSemNotes')){
+        return '<a href="/home/semFive" target="_blank">Sixth semester notes</a>'
+      }
+
+      if(doc.has('#SeventhSemNotes')){
+        return '<a href="/home/semSix" target="_blank">Seventh semester notes</a>'
+      }
+      
+      
+      if(doc.has('#SecondSemSyllabus')){
+        return '<ul>'+
+'     <li>Design and Analysis of Algorithms</li>'+
+'     <li>Discrete Mathematical Structures</li>'+
+'     <li>Object Oriented Programming</li>'+
+'     <li>Computer Architecture and Organization</li>'+
+'   </ul>'
+      }
+
+      if(doc.has('#ThirdSemSyllabus')){
+        return '<ul >'+
+'       <li >Operating Systems</li>'+
+'       <li >Object Oriented Analysis and Design</li>'+
+'       <li >Open Source Programming</li>'+
+'       <li >Embedded Systems</li>'+
+'     </ul>'
+      }
+
+      if(doc.has('#FourthSemSyllabus')){
+        return '<ul >'+
+'       <li >Database Management Systems</li>'+
+'       <li >Data Communication and Computer Networks</li>'+
+'       <li >Computer Graphics and Multimedia</li>'+
+'       <li >Principles of Compiler Design</li>'+
+'     </ul>'
+      }
+
+      if(doc.has('#FifthSemSyllabus')){
+        return '<ul >'+
+'                                   <li >Principles of Software Engineering</li>'+
+'                                   <li >Web Technology</li>'+
+'                                   <li >Network Programming</li>'+
+'                                   <li >Wireless Networks & Mobile Computing</li>'+
+'                                   </ul>'
+      }
+
+      if(doc.has('#SixthSemSyllabus')){
+        return '<ul >'+
+'                                   <li >Software Testing</li>'+
+'                                   <li >Network security</li>'+
+'                                   <li >Data Warehousing and Business Intelligence</li>'+
+'                                   <li >Web Services and Service Oriented Architecture</li>'+
+'                                   </ul>'
+      }
+
+      if(doc.has('#SeventhSemSyllabus')){
+        return '<ul >'+
+'                                   <li >Software Project Management</li>'+
+'                                   <li >Cloud Computing</li>'+
+'                                   <li >Artificial Intelligence</li>'+
+'                                   <li >Real Time Systems</li>'+
+'                                   </ul>'
+      }
+
+
+      //Check for the condition
+      if(doc.has('#UserDetails')){
+      console.log(doc.match('#MyName').out('text'))
+      return 'Getting the above details '+doc.match('#MyName').out('text');
+      }
+      
+      //Check for the condition
+      if(doc.has('#SearchWiki')){
+      //console.log(doc.match('#MyName').out('text'))
+     var queryTerm=doc.nouns().out();
+    return searchWiki(queryTerm)
+     }
+      
+      //Check for the condition
+      if(doc.has('#GreetSomeone')){
+      //console.log(doc.match('#MyName').out('text'))
+      //return 'Robo says Hi.'
+      var greetingsArray = ['Hi', 'Hello', 'Bonjour','Namaste'];    
+      var pickRandomGreeting = greetingsArray[Math.floor(Math.random() * greetingsArray.length)];
+      return pickRandomGreeting;
+      }
+      
+      //Check for the condition
+      if(doc.has('#GreetSomeoneThanksReply')){
+      //console.log(doc.match('#MyName').out('text'))
+      var greetingsArray = ['you\'re welcome', '(it\'s) my pleasure', 'that’s all right'];    
+      var pickRandomGreeting = greetingsArray[Math.floor(Math.random() * greetingsArray.length)];
+      return pickRandomGreeting;
+      }
+     else{
+      sendUnansweredQueryData(query);
+       return "I'm learning based on your reponses.";
+     }
+      
+    }
+    $(function () {
+      var INDEX = 0;
+      $("#chat-submit").click(function (e) {
+        e.preventDefault();
+        var msg = $("#chat-input").val();
+        if (msg.trim() == '') {
+          return false;
+        }
+        generate_message(msg, 'self');
+        var buttons = [
+        {
+          name: 'Existing User',
+          value: 'existing' },
+    
+        {
+          name: 'New User',
+          value: 'new' }];
+    
+    //Query for response	  
+    var responseServer='';
+        setTimeout(function () {
+          generate_message(roboResponse(msg), 'user');
+      }, 3000);
+    
+      });
+    
+      function generate_message(msg, type) {
+        INDEX++;
+        var str = "";
+        str += "<div id='cm-msg-" + INDEX + "' class=\"chat-msg " + type + "\">";
+        str += "          <span class=\"msg-avatar\">";
+    if (type == 'user') {   
+       str += "            <img src=\"data:image/png;base64,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\">";
+       }
+       else if(type == 'self'){
+        str += "            <img src=\"data:image/png;base64,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\">";
+       }
+        str += "          <\/span>";
+        str += "          <div class=\"cm-msg-text\">";
+        str += msg;
+        str += "          <\/div>";
+        str += "        <\/div>";
+        $(".chat-logs").append(str);
+        $("#cm-msg-" + INDEX).hide().fadeIn(300);
+        if (type == 'self') {
+          $("#chat-input").val('');
+        }
+        $(".chat-logs").stop().animate({ scrollTop: $(".chat-logs").eq(0).scrollHeight }, 1000);
+      }
+    
+      
+    
+      $(document).delegate(".chat-btn", "click", function () {
+        var value = $(this).attr("chat-value");
+        var name = $(this).html();
+        $("#chat-input").attr("disabled", false);
+        generate_message(name, 'self');
+      });
+    
+      $("#chat-circle").click(function () {
+        $("#chat-circle").toggle('scale');
+        $(".chat-box").toggle('scale');
+      });
+    
+      $(".chat-box-toggle").click(function () {
+        $("#chat-circle").toggle('scale');
+        $(".chat-box").toggle('scale');
+      });
+      $( document ).ready(function() {
+        console.log( "ready!" );
+       generate_message("How can i help you today?", 'user');
+    });
+    
+    });
+ 
+    function sendQueryData(query){
+var SendInfo= {
+	"questions":query
+};
+
+
+        $.ajax({
+            type: 'post',
+            url: restUrl+'queries/addQuestion',
+            data: JSON.stringify(SendInfo),
+            contentType: "application/json; charset=utf-8",
+            traditional: true,
+            success: function (data) {
+                console.log(data)
+            }
+        });}
+
+         function sendUnansweredQueryData(query){
+var SendInfo= {
+	"questions":query
+};
+
+
+        $.ajax({
+            type: 'post',
+            url: restUrl+'queries/addUnAnsweredQuestion',
+            data: JSON.stringify(SendInfo),
+            contentType: "application/json; charset=utf-8",
+            traditional: true,
+            success: function (data) {
+                console.log(data)
+            }
+        });}
+    
+    </script>
+  <app-root></app-root>
+</body>
+</html>

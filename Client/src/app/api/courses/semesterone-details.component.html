@@ -1,0 +1,98 @@
+<div class="container">
+<div>
+
+    <h1>Second Semester Learning Documents</h1>
+    
+  </div>
+  <div>
+    <!--  <table class='table' table-striped table-condensed style="margin-left:20px">
+        <tbody *ngFor="let user of users">
+          <div  *ngIf="user.name=='DAA'">
+          <tr>
+            <td>{{user.subject}}</td>  
+            <td>{{user.name}}</td>
+            <td> {{user.unit}} </td>
+            <td><a [routerLink]="['../edit' ,user._id]">Edit</a></td>
+          </tr>
+        </div>
+        </tbody>
+        </table>-->
+
+
+        <div id="accordion">
+            <div class="card">
+              <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                  Design and Analysis of Algorithms
+                </a>
+              </div>
+              <div id="collapseOne" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                  <div *ngFor="let user of users">
+                <ul *ngIf="user.name=='DAA'" >
+              <li><a href="javascript:void(0);" (click)="goToLink(user.url)">{{user.subject}} Unit {{user.unit}}</a></li>
+            </ul>
+          </div>
+                </div>
+          <!--  <div class="card-footer"><a href="#" style="color: red;">View Syllabus</a></div>-->
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+               Discrete Mathematical Structures
+              </a>
+              </div>
+              <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                    <div *ngFor="let user of users">
+                        <ul *ngIf="user.name=='DMS'" >
+                      <li><a href="javascript:void(0);" (click)="goToLink(user.url)">{{user.subject}} Unit {{user.unit}}</a></li>
+                    </ul>
+                  </div>
+                </div>
+          <!--  <div class="card-footer"><a href="#"  style="color: red;" data-toggle="modal" data-target="#myDMSSyllabusModal">View Syllabus</a>-->
+            </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+                  Object Oriented Programming
+                </a>
+              </div>
+              <div id="collapseThree" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                    <div *ngFor="let user of users">
+                        <ul *ngIf="user.name=='OOPS'" >
+                      <li><a href="javascript:void(0);" (click)="goToLink(user.url)">{{user.subject}} Unit {{user.unit}}</a></li>
+                    </ul>
+                  </div>
+                </div>
+           <!-- <div class="card-footer"><a href="#" style="color: red;">View Syllabus</a></div>-->
+              </div>
+            </div>
+              <div class="card">
+              <div class="card-header">
+                <a class="collapsed card-link" data-toggle="collapse" href="#collapseFour">
+                  Computer Architecture and Organization
+                </a>
+              </div>
+              <div id="collapseFour" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                    <div *ngFor="let user of users">
+                        <ul *ngIf="user.name=='CAO'" >
+                      <li><a href="javascript:void(0);" (click)="goToLink(user.url)">{{user.subject}} Unit {{user.unit}}</a></li>
+                    </ul>
+                  </div>
+                </div>
+            <!--<div class="card-footer"><a href="#" style="color: red;">View Syllabus</a></div>-->
+              </div>
+            </div>
+             
+          </div>
+        
+
+
+</div>
+  

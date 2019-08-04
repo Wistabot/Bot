@@ -1,0 +1,18 @@
+<div class="container" style="overflow-x: auto">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Questions</th>
+        <th>Answer</th>
+        <th>Explanation</th>
+        </tr>
+    </thead>
+    <tbody *ngFor="let d of data">
+      <tr>
+        <td>{{d.question}}</td>  
+        <td>{{d.answer}}</td>  
+        <td>{{d.explanation}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

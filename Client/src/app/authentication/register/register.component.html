@@ -1,0 +1,60 @@
+<div class="main">
+<section class="signup">
+
+<div class="container">
+<div class="signup-content">
+<form id="signup-form" class="signup-form" (ngSubmit)="register()" [formGroup]="registerForm" novalidate>
+<h2 class="form-title">Create account</h2>
+<div class="form-group">
+<input type="text" class="form-input" name="name" id="name" placeholder="Your Name" formControlName="name"/>
+</div>
+<div class="form-group">
+<input type="email" class="form-input" name="email" id="email" placeholder="Your Email" formControlName="email"/>
+</div>
+<div class="form-group">
+<input type="password" class="form-input" name="password" id="password" placeholder="Password" formControlName="password"/>
+<span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"  onclick="if (password.type == 'text') password.type = 'password' ;
+else password.type = 'text';"></span>
+</div>
+<div class="form-group">
+  <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+  <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in <a data-toggle="modal" data-target="#flipFlop"><u>Terms of service</u></a></label>
+  </div>
+<div class="form-group">
+<input type="submit" name="submit" id="submit" class="form-submit" value="Sign up"/>
+</div>
+</form>
+<p class="error-text">{{auth.errorText}}</p>
+  <p>Already have an account? <a routerLink="/login">Login</a></p>
+
+</div>
+</div>
+</section>
+</div>
+
+<!-- The modal -->
+<div class="modal fade" id="flipFlop" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <!--Header-->
+  <div class="modal-header">
+  <h4 class="modal-title" id="modalLabel">Terms and Conditions for MyWebsite</h4>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+  <!--Body-->
+  <div class="modal-body">
+  <h2>Introduction</h2>
+  <p>These Website Standard Terms and Conditions written on this webpage shall manage your use of our website, Webiste Name accessible at wistabot.herokuapp.com.</p>
+<p>These Terms will be applied fully and affect to your use of this Website. By using this Website, you agreed to accept all terms and conditions written in here. You must not use this Website if you disagree with any of these Website Standard Terms and Conditions.</p>  
+<h2>No warranties</h2>
+<p>This Website is provided “as is,” with all faults, and Company Name express no representations or warranties, of any kind related to this Website or the materials contained on this Website. Also, nothing contained on this Website shall be interpreted as advising you.</p>
+</div>
+  <!--Footer-->
+  <div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+  </div>
+  </div>
+  </div>
+  </div>

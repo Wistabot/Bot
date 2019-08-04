@@ -1,0 +1,260 @@
+<nav *ngIf="role | async as userRole" class="navbar navbar-expand-md   bg-dark navbar-dark">
+    <a class="navbar-brand" routerLink="/home">WiSTABot</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+          <li class="nav-item" *ngIf="userRole == 'admin'">
+              <button class="btn btn-info"  routerLink="./admin">Admin Panel</button>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"  routerLink="./academicsPolicy">Academics</a>
+              </li>
+            <li class="nav-item">
+              <a class="nav-link"  routerLink="./wistaPolicy">Policies</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="./about">About</a>
+              </li>
+      </ul>
+
+      <ul class="navbar-nav ml-auto">
+          <li class="nav-item"><a class="nav-link" routerLink="./userDetails"><span class="glyphicon glyphicon-user"></span>{{auth.name()}}</a></li>
+          <li class="nav-item"><a class="nav-link" (click)="auth.logout()"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+        </ul>
+      
+    </div>
+  </nav>
+  <div class="alert alert-info alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Help me!</strong> If you think you can teach WistaBot <a routerLink="./teachBot" class="alert-link">click here</a>.
+      </div>
+
+<!--
+<header *ngIf="role | async as userRole" >
+  <button *ngIf="userRole == 'admin'"  routerLink="./admin">Admin Panel</button>
+  <button routerLink="./tickets">Tickets</button>
+  <p>Hi {{auth.name()}}. <a (click)="auth.logout()">[Logout]</a></p>
+</header>
+-->
+
+<div *ngIf="router.url == '/home'">
+  <div id="center-text">
+      <section class="details-card">
+           <div class="container">
+               <div class="row">
+                   <div class="col-md-4">
+                       <div class="card-content">
+                           <div class="card-img">
+                               <img src="../../../assets/2.png" alt="">
+                               <span><h4>Semester 2</h4></span>
+                           </div>
+                           <div class="card-desc">
+                               <h3>Topics covered</h3>
+                               <div>
+                                 <ul>
+     <li>Design and Analysis of Algorithms</li>
+     <li>Discrete Mathematical Structures</li>
+     <li>Object Oriented Programming</li>
+     <li>Computer Architecture and Organization</li>
+   </ul>
+   </div>
+                                   <a routerLink="./semOne" class="btn-card">Read</a>   
+                           </div>
+                       </div>
+                   </div>
+                   <div class="col-md-4">
+                       <div class="card-content">
+                           <div class="card-img">
+                               <img src="../../../assets/3.png" alt="">
+                               <span><h4>Semester 3</h4></span>
+                           </div>
+                           <div class="card-desc">
+                               <h3>Topics covered</h3>
+                               <div>
+                                   <ul>
+       <li>Operating Systems</li>
+       <li>Object Oriented Analysis and Design</li>
+       <li>Open Source Programming</li>
+       <li>Embedded Systems</li>
+     </ul>
+     </div>
+                                   <a routerLink="./semTwo" class="btn-card">Read</a>   
+                           </div>
+                       </div>
+                   </div>
+                   <div class="col-md-4">
+                       <div class="card-content">
+                           <div class="card-img">
+                               <img src="../../../assets/4.png" alt="">
+                               <span><h4>Semester 4</h4></span>
+                           </div>
+                           <div class="card-desc">
+                               <h3>Topics covered</h3>
+                               <div>
+                                   <ul>
+       <li>Database Management Systems</li>
+       <li>Data Communication and Computer Networks</li>
+       <li>Computer Graphics and Multimedia</li>
+       <li>Principles of Compiler Design</li>
+     </ul>
+   </div>
+                                   <a routerLink="./semThree" class="btn-card">Read</a>   
+                           </div>
+                       </div>
+                   </div>
+               </div>
+   
+               <div class="row">
+                   <div class="col-md-4">
+                       <div class="card-content">
+                           <div class="card-img">
+                                <img src="../../../assets/5.png" alt="">
+                               <span><h4>Semester 5</h4></span>
+                           </div>
+                           <div class="card-desc">
+                               <h3>Topics covered</h3>
+                               <div>
+                                   <ul>
+                                   <li>Principles of Software Engineering</li>
+                                   <li>Web Technology</li>
+                                   <li>Network Programming</li>
+                                   <li>Wireless Networks & Mobile Computing</li>
+                                   </ul>
+                                   </div>
+                                   <a routerLink="./semFour" class="btn-card">Read</a>   
+                           </div>
+                       </div>
+                   </div>
+                   <div class="col-md-4">
+                       <div class="card-content">
+                           <div class="card-img">
+                                <img src="../../../assets/6.png" alt="">
+                               <span><h4>Semester 6</h4></span>
+                           </div>
+                           <div class="card-desc">
+                               <h3>Topics covered</h3>
+                               <div>
+                                   <ul>
+                                   <li>Software Testing</li>
+                                   <li>Network security</li>
+                                   <li>Data Warehousing and Business Intelligence</li>
+                                   <li>Web Services and Service Oriented Architecture</li>
+                                   </ul>
+                                   </div>
+                                   <a routerLink="./semFive" class="btn-card">Read</a>   
+                           </div>
+                       </div>
+                   </div>
+                   <div class="col-md-4">
+                       <div class="card-content">
+                           <div class="card-img">
+                                <img src="../../../assets/7.png" alt="">
+                               <span><h4>Semester 7</h4></span>
+                           </div>
+                           <div class="card-desc">
+                               <h3>Topics covered</h3>
+                               <div>
+                                   <ul>
+                                   <li>Software Project Management</li>
+                                   <li>Cloud Computing</li>
+                                   <li>Artificial Intelligence</li>
+                                   <li>Real Time Systems</li>
+                                   </ul>
+                                   </div>
+                                   <a routerLink="./semSix" class="btn-card">Read</a>   
+                           </div>
+                       </div>
+                   </div>
+               </div>
+ 
+               <!--
+               <div class="row">
+                   <div class="col-md-4">
+                       <div class="card-content">
+                           <div class="card-img">
+                                <img src="../../../assets/plab.png" alt="">
+                               <span><h4>Pro. Lab</h4></span>
+                           </div>
+                           <div class="card-desc">
+                               <h3>Programming Lab covers</h3>
+                               <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam, voluptatum! Dolor quo, perspiciatis
+                                   voluptas totam</p>
+                                   <a href="#" class="btn-card" onclick="return false;">Read</a>   
+                           </div>
+                       </div>
+                   </div>
+                   <div class="col-md-4">
+                       <div class="card-content">
+                           <div class="card-img">
+                                <img src="../../../assets/apd.png" alt="">
+                               <span><h4>APD Docs</h4></span>
+                           </div>
+                           <div class="card-desc">
+                               <h3>APD Covers</h3>
+                               <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam, voluptatum! Dolor quo, perspiciatis
+                                   voluptas totam</p>
+                                   <a href="#" class="btn-card" onclick="return false;">Read</a>   
+                           </div>
+                       </div>
+                   </div>
+                   <div class="col-md-4">
+                       <div class="card-content">
+                           <div class="card-img">
+                                <img src="../../../assets/8.png" alt="">
+                               <span><h4>Semester 8</h4></span>
+                           </div>
+                           <div class="card-desc">
+                               <h3>Final APD Covers</h3>
+                               <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam, voluptatum! Dolor quo, perspiciatis
+                                   voluptas totam</p>
+                                   <a href="#" class="btn-card" onclick="return false;">Read</a>   
+                           </div>
+                       </div>
+                   </div>
+               </div>
+            -->
+           </div>
+       </section>  
+     </div> 
+</div>
+
+
+
+
+<!--chat box code-->
+<div id="body"> 
+  
+    <div id="chat-circle" class="btn btn-raised">
+            <div id="chat-overlay"></div>
+            <i class="material-icons">chat</i>
+      </div>
+      
+      <div class="chat-box">
+        <div class="chat-box-header">
+            WiSTABot
+          <span class="chat-box-toggle"><i class="material-icons">close</i></span>
+        </div>
+        <div class="chat-box-body">
+          <div class="chat-box-overlay">   
+          </div>
+          <div class="chat-logs">
+           
+          </div><!--chat-log -->
+        </div>
+        <div class="chat-input">      
+          <form>
+            <input type="text" id="chat-input" placeholder="Send a message..."/>
+          <button type="submit" class="chat-submit" id="chat-submit"><i class="material-icons">send</i></button>
+          </form>      
+        </div>
+      </div>
+      
+      
+      
+      
+    </div>
+<router-outlet></router-outlet>
+

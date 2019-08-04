@@ -1,0 +1,38 @@
+
+<!--<div *ngFor="let user of adminService.users">
+    <p>User: {{user.email}} - {{user.role}} [<a [routerLink]="['../edit' ,user._id]">Edit</a>]</p>
+</div>
+-->
+
+<div class="container" style="overflow-x: auto">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+         <!-- <th>ID</th>-->
+          <th>Name</th>
+          <th>Semester</th>
+          <th>Unit</th>
+          <th>Subject</th>
+          <th>URL</th>
+          <th>Tags</th>
+          <th>Edit</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let user of users">
+        <tr>
+        <!--  <td>{{user._id}}</td>  -->
+          <td>{{user.name}}</td>  
+          <td>{{user.semester}}</td>
+          <td> {{user.unit}} </td>
+          <td> {{user.subject}} </td>
+          <td style="word-wrap: break-word;min-width: 160px;max-width: 160px;"> <a  href="javascript:void(0);" (click)="goToLink(user.url)">{{user.url}}</a> </td>
+          <td> {{user.tags}} </td>
+          
+          <td><a [routerLink]="['../editCourse' ,user._id]">Edit</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+ 
+  

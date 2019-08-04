@@ -1,0 +1,28 @@
+
+<!--<div *ngFor="let user of adminService.users">
+    <p>User: {{user.email}} - {{user.role}} [<a [routerLink]="['../edit' ,user._id]">Edit</a>]</p>
+</div>
+-->
+<div class="container" style="overflow-x: auto">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Edit</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let user of adminService.users">
+        <tr>
+          <td>{{user.name}}</td>  
+          <td>{{user.email}}</td>
+          <td> {{user.role}} </td>
+          <td><a [routerLink]="['../edit' ,user._id]">Edit</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+ 
+  

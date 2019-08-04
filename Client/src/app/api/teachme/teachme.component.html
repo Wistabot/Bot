@@ -1,0 +1,17 @@
+<div class="container">
+    <form (ngSubmit)="register()" [formGroup]="teachMeForm" novalidate>
+  
+      <label for="question">Question</label>
+      <input type="text" formControlName="question" id="qn" name="question" placeholder="Your question..">
+  
+      <label for="answer">Answer</label>
+      <input type="text" formControlName="answer" id="an" name="answer" placeholder="Your answer..">
+
+  
+      <label for="explanation">Explanation</label>
+      <textarea id="ex" formControlName="explanation" name="explanation" placeholder="Write something about your explanation making it more clear.." style="height:200px"></textarea>
+  
+      <input type="submit" value="Submit">
+  
+    </form>
+  </div>
