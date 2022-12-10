@@ -31,7 +31,7 @@
     "core-js": "^2.4.1",
     "ng2-googlechart": "^2.14.0",
     "rxjs": "^5.5.2",
-    "express": "^4.15.5",
+    "express": "^4.17.3",
     "sweetalert2": "^7.29.0",
     "zone.js": "^0.8.14"
   },
